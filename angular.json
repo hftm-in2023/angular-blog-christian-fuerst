@@ -62,7 +62,6 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-          "options": false,
           "configurations": {
             "production": {
               "buildTarget": "angular-blog-christian-fuerst:build:production"
