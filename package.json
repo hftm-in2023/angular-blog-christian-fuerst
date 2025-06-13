@@ -15,6 +15,9 @@
     "security:check": "snyk test"
   },
   "private": true,
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "dependencies": {
     "@angular/common": "^20.0.3",
     "@angular/compiler": "^20.0.3",
