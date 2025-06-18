@@ -31,6 +31,12 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Lint code
+        run: npm run lint
+
+      - name: Run unit tests
+        run: npm test
+
       - name: Build Angular project
         run: npm run build
 
@@ -47,30 +53,7 @@ jobs:
           api_location: "api" # Api source code path - optional
           output_location: "dist/angular-blog-christian-fuerst/browser" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
-
-  ci_pipeline:
-    name: CI Pipeline
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Lint code
-        run: npm run lint
-
-      - name: Run unit tests
-        run: npm test
-
-      - name: Build Angular project
-        run: npm run build
+    
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
