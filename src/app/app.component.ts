@@ -49,15 +49,17 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class AppComponent {
 
+  title = 'angular-blog-christian-fuerst';
+
   // --- NgModel (Two-Way Binding) ---
-  userName: string = 'Peter Muster';
+  userName = 'Peter Muster';
 
   // --- @if ---
-  wantsGoodieBag: boolean = false;
+  wantsGoodieBag = false;
 
   // --- (click) Event Binding & NgClass ---
-  isSubmitted: boolean = false;
-  submitMessage: string = 'Anmeldung wurde noch nicht gesendet.';
+  isSubmitted = false;
+  submitMessage = 'Anmeldung wurde noch nicht gesendet.';
 
   // --- @switch ---
   experienceLevel: 'beginner' | 'advanced' | 'expert' = 'beginner';
@@ -68,7 +70,7 @@ export class AppComponent {
     { value: 'react', viewValue: 'React für Einsteiger' },
     { value: 'vue', viewValue: 'Vue.js Deep Dive' }
   ];
-  selectedTopic: string = 'angular';
+  selectedTopic = 'angular';
 
   // --- NgStyle ---
   dynamicStyle = {
