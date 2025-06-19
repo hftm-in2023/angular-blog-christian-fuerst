@@ -1,6 +1,7 @@
 :host {
   display: block;
   padding: 1rem;
+  color: #e0e0e0;
 }
 
 /* Hauptkarte zentrieren und responsive Breite */
@@ -28,7 +29,6 @@ mat-form-field {
 .info-text {
   margin-left: 0.5rem;
   font-style: italic;
-  color: rgba(0, 0, 0, 0.65);
 }
 
 /* Footer-Bereich */
