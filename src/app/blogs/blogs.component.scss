@@ -1,0 +1,47 @@
+/* blogs.component.scss */
+h1{
+    text-align: center;
+    width: 100%;
+}
+
+.blog-container {
+  // --- FLEXBOX-STEUERUNG FÜR DEN CONTAINER ---
+  
+  // 1. Hier wird Flexbox für den Container aktiviert.
+  display: flex;
+  
+  // 2. Erlaubt den Flex-Items (den Karten), in die nächste Zeile umzubrechen, 
+  //    wenn der Platz nicht ausreicht. Essentiell für Responsivität.
+  flex-wrap: wrap;
+  
+  // 3. Definiert den Abstand zwischen den Flex-Items.
+  gap: 20px;
+  
+  // --- Reines Layout für Abstände ---
+  padding: 20px;
+}
+
+
+.blog-card {
+  // --- FLEXBOX-STEUERUNG FÜR DIE EINZELNEN ITEMS (KARTEN) ---
+
+  // 1. Dies ist die wichtigste Flexbox-Regel für die Karten selbst.
+  //    Es ist eine Kurzform für:
+  //    - flex-grow: 1;   (Die Karte darf wachsen, um Leerraum zu füllen)
+  //    - flex-shrink: 1; (Die Karte darf schrumpfen, wenn es nötig ist)
+  //    - flex-basis: 300px; (Die Karte versucht, eine ideale Breite von 300px zu haben)
+  flex: 1 1 300px;
+
+  // --- Reines Layout zur Absicherung und für die Optik ---
+  min-width: 300px; 
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+}
+
+mat-card-content {
+  padding-top: 16px;
+}

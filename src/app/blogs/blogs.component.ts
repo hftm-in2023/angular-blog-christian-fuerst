@@ -1,7 +1,11 @@
+import { Component, inject, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Wichtig für NgClass/NgStyle in älteren Versionen, gute Praxis
-import { BlogsComponent } from './blogs/blogs.component';
+import { CommonModule } from '@angular/common';
+
+import { BlogService } from './../service/blog.service';
+import { Blog } from '../service/blog.service.interface'; // Importiere das Blog-Interface
+
 
 // Angular Material Module
 import { MatCardModule } from '@angular/material/card';
@@ -15,12 +19,10 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-  selector: 'app-root',
+  selector: 'app-blogs',
   standalone: true,
   imports: [
-    BlogsComponent,
     CommonModule,
-
     // <-- Alle benötigten Material Module hier importieren
     MatCardModule,
     MatFormFieldModule,
@@ -32,9 +34,16 @@ import { MatIconModule } from '@angular/material/icon';
     MatListModule,
     MatIconModule
   ],
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  templateUrl: './blogs.component.html',
+  styleUrls: ['./blogs.component.scss']
 })
-export class AppComponent {
+export class BlogsComponent implements OnInit {
+  blogs$!: Observable<Blog[]>;
+  title = 'angular-blog-christian-fuerst';
 
+  private blogService = inject(BlogService);
+  
+  ngOnInit(): void {
+    this.blogs$ = this.blogService.getBlogs();
+  }
 }
