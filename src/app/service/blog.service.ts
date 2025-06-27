@@ -1,17 +1,19 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { map, Observable } from 'rxjs';
+import { Blog, ApiResponse } from './blog.service.interface'; // Annahme: Pfad zur Interface-Datei
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class BlogService {
 
-  constructor(private http: HttpClient) { }
+  private http = inject(HttpClient);
 
-  getBlogs() {
-    return this.http.get("./api/entries").pipe(
-      map(response => (response as any).data)
+  getBlogs(): Observable<Blog[]> {
+    return this.http.get<ApiResponse>("./api/entries").pipe(
+      map(response => response.data)
     );
   }
 }

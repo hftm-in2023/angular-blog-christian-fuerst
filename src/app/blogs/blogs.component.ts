@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { CommonModule } from '@angular/common';
 
 import { BlogService } from './../service/blog.service';
+import { Blog } from '../service/blog.service.interface'; // Importiere das Blog-Interface
+
 
 // Angular Material Module
 import { MatCardModule } from '@angular/material/card';
@@ -33,14 +35,15 @@ import { MatIconModule } from '@angular/material/icon';
     MatIconModule
   ],
   templateUrl: './blogs.component.html',
-  styleUrl: './blogs.component.scss'
+  styleUrls: ['./blogs.component.scss']
 })
-export class BlogsComponent {
-  
-  blogs$: Observable<any>;
+export class BlogsComponent implements OnInit {
+  blogs$!: Observable<Blog[]>;
   title = 'angular-blog-christian-fuerst';
 
-  constructor(private blogService: BlogService) {
+  private blogService = inject(BlogService);
+  
+  ngOnInit(): void {
     this.blogs$ = this.blogService.getBlogs();
   }
 }

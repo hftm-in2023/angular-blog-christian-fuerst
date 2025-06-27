@@ -1,7 +1,6 @@
 
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common'; // Wichtig für NgClass/NgStyle in älteren Versionen, gute Praxis
-import { HttpClient } from '@angular/common/http';
 import { BlogsComponent } from './blogs/blogs.component';
 
 // Angular Material Module
@@ -14,7 +13,6 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -38,7 +36,5 @@ import { Observable } from 'rxjs';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-
-  title = 'angular-blog-christian-fuerst';
 
 }
