@@ -1,40 +1,29 @@
-
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Wichtig für NgClass/NgStyle in älteren Versionen, gute Praxis
-import { BlogsComponent } from './blogs/blogs.component';
-
-// Angular Material Module
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatRadioModule } from '@angular/material/radio';
-import { MatListModule } from '@angular/material/list';
-import { MatIconModule } from '@angular/material/icon';
+import { RouterOutlet } from '@angular/router';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
-    BlogsComponent,
-    CommonModule,
-
-    // <-- Alle benötigten Material Module hier importieren
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatSelectModule,
+    RouterOutlet,
     MatSlideToggleModule,
-    MatRadioModule,
-    MatListModule,
-    MatIconModule
+    NavbarComponent
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  public title = 'angular-blog-christian-fuerst';
+  public backgroundRed = false;
+  public receivedMessage = '';
 
+  public toggleBackground() {
+    this.backgroundRed = !this.backgroundRed;
+  }
+
+  onMessageReceived(msg: string) {
+    this.receivedMessage = msg;
+  }
 }

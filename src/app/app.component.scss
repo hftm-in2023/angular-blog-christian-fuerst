@@ -1,5 +1,5 @@
-:host {
-  display: block;
-  padding: 1rem;
-  color: #e0e0e0;
+@import "../styles/colors.scss";
+
+.app-root {
+  background-color: $color-background;
 }
