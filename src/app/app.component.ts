@@ -1,21 +1,17 @@
 import { Component } from '@angular/core';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { RouterOutlet } from '@angular/router';
-import { NavbarComponent } from './navbar/navbar.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { NavbarComponent } from './core/navbar/navbar.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [
-    RouterOutlet,
-    MatSlideToggleModule,
-    NavbarComponent
-  ],
+  imports: [RouterOutlet, MatSlideToggleModule, NavbarComponent],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  public title = 'angular-blog-christian-fuerst';
+  protected title = 'angular-blog-r-steger';
   public backgroundRed = false;
   public receivedMessage = '';
 
