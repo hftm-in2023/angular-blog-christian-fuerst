@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
-            "outputPath": "dist/angular-blog-r-steger",
+            "outputPath": "dist/angular-blog-christian-fuerst",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -70,10 +70,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "angular-blog-r-steger:build:production"
+              "buildTarget": "angular-blog-christian-fuerst:build:production"
             },
             "development": {
-              "buildTarget": "angular-blog-r-steger:build:development"
+              "buildTarget": "angular-blog-christian-fuerst:build:development"
             }
           },
           "defaultConfiguration": "development"
