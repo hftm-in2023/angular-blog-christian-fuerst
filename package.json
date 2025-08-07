@@ -1,62 +1,86 @@
 {
-  "name": "angular-blog-christian-fuerst",
+  "name": "angular-blog-r-steger",
   "version": "0.0.0",
+  "private": true,
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "description": "This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.1.",
+  "homepage": "https://github.com/Gattuzzu/angular-blog-r-steger#readme",
+  "bugs": {
+    "url": "https://github.com/Gattuzzu/angular-blog-r-steger/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gattuzzu/angular-blog-r-steger.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "test:ci": "ng test --no-watch --no-progress --browsers=ChromeHeadless",
     "lint": "ng lint",
-    "format": "prettier --write \"src/**/*.{ts,html,scss,css,json,md}\"",
-    "prepare": "husky",
-    "audit": "npm audit",
-    "deps:update": "ncu -u && npm install",
-    "security:check": "snyk test"
-  },
-  "private": true,
-  "engines": {
-    "node": ">=20.0.0"
+    "format": "npx prettier --write ./src/app/*",
+    "prepare": "husky"
   },
   "dependencies": {
     "@angular/animations": "^20.0.5",
-    "@angular/cdk": "^20.0.3",
-    "@angular/common": "^20.0.5",
-    "@angular/compiler": "^20.0.5",
-    "@angular/core": "^20.0.5",
-    "@angular/forms": "^20.0.5",
-    "@angular/material": "^20.0.3",
-    "@angular/platform-browser": "^20.0.5",
-    "@angular/platform-browser-dynamic": "^20.0.5",
-    "@angular/router": "^20.0.5",
-    "angular-blog-christian-fuerst": "file:",
-    "cors": "^2.8.5",
-    "rxjs": "~7.8.2",
-    "tslib": "^2.8.1",
-    "zone.js": "~0.15.1"
-  },
-  "devDependencies": {
-    "@angular-devkit/build-angular": "^20.0.4",
-    "@angular/cli": "^20.0.4",
-    "@angular/compiler-cli": "^20.0.5",
+    "@angular/cdk": "^20.0.2",
+    "@angular/common": "^20.0.1",
+    "@angular/compiler": "^20.0.1",
+    "@angular/core": "^20.0.1",
+    "@angular/forms": "^20.0.1",
+    "@angular/material": "^20.0.2",
+    "@angular/platform-browser": "^20.0.1",
+    "@angular/platform-browser-dynamic": "^20.0.1",
+    "@angular/router": "^20.0.1",
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
-    "@eslint/eslintrc": "^3.3.1",
-    "@types/jasmine": "~5.1.8",
-    "angular-eslint": "20.0.0",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0",
+    "zod": "^3.25.76",
+    "zone.js": "~0.15.0"
+  },
+  "devDependencies": {
+    "@angular/build": "^20.0.1",
+    "@angular/cli": "^20.0.1",
+    "@angular/compiler-cli": "^20.0.1",
+    "@types/jasmine": "~5.1.0",
+    "angular-eslint": "19.7.1",
     "eslint": "^9.28.0",
-    "eslint-config-prettier": "^10.1.5",
-    "eslint-plugin-prettier": "^5.4.1",
     "husky": "^9.1.7",
-    "jasmine-core": "~5.8.0",
-    "karma": "~6.4.4",
+    "jasmine-core": "~5.6.0",
+    "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
-    "karma-coverage": "~2.2.1",
+    "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "lint-staged": "^16.1.0",
     "prettier": "^3.5.3",
     "typescript": "~5.8.3",
-    "typescript-eslint": "8.34.0"
+    "typescript-eslint": "8.33.1"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "lint-staged": {
+    "*.{ts,js,html}": "eslint --cache --fix",
+    "*.{ts,js,html,css,scss,less,md}": "prettier --write"
+  },
+  "madge": {
+    "fontSize": "10px",
+    "graphVizOptions": {
+      "G": {
+        "rankdir": "LR"
+      }
+    }
   }
 }
