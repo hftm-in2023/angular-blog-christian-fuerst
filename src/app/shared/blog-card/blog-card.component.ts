@@ -1,52 +1,51 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, ChangeDetectionStrategy, input, output } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-
-import { BlogEntryPreview } from '../../core/service/blog/blog.service';
+import { MatButtonModule } from '@angular/material/button';
+import { BlogEntryPreview } from '../../core/models/blog.models';
 
 @Component({
   selector: 'app-blog-card',
-  imports: [MatCardModule],
+  imports: [MatCardModule, MatButtonModule],
   styleUrl: './blog-card.component.scss',
   standalone: true,
   template: `
-    @if (this.blogEntry === null) {
-      <p>Fehler beim anzeigen von der Blog Vorschau!</p>
-    } @else {
+    @if (blogEntry(); as entry) {
       <mat-card class="blog-card" appearance="outlined" (click)="onClickBlogEntry()">
-        <p>{{ this.blogEntry.id }}</p>
+        <p>{{ entry.id }}</p>
         <mat-card-header>
-          <mat-card-title>{{ this.blogEntry.title }}</mat-card-title>
-          <mat-card-subtitle>{{ this.blogEntry.author }}</mat-card-subtitle>
+          <mat-card-title>{{ entry.title }}</mat-card-title>
+          <mat-card-subtitle>{{ entry.author }}</mat-card-subtitle>
         </mat-card-header>
         <img
           mat-card-image
-          [src]="
-            this.blogEntry.headerImageUrl !== '' &&
-            typeof this.blogEntry.headerImageUrl === 'string'
-              ? this.blogEntry.headerImageUrl
-              : 'images/pictureNotFound.png'
-          "
-          alt="Missing Picture"
+          [src]="entry.headerImageUrl || 'images/pictureNotFound.jpg'"
+          alt="Header Image"
         />
         <mat-card-content>
-          <p>{{ this.blogEntry.contentPreview }}</p>
+          <p>{{ entry.contentPreview }}</p>
         </mat-card-content>
         <mat-card-actions>
-          <button matButton>LIKE</button>
-          <button matButton>SHARE</button>
+          <button mat-button>LIKE</button>
+          <button mat-button>SHARE</button>
         </mat-card-actions>
       </mat-card>
+    } @else {
+      <p>Fehler beim Anzeigen der Blog Vorschau!</p>
     }
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BlogCardComponent {
-  @Input() blogEntry: BlogEntryPreview | null = null;
+  blogEntry = input.required<BlogEntryPreview | null>();
 
-  @Output() blogId = new EventEmitter<number>();
+  // KORREKTUR: Das Output-Signal wird umbenannt, um Konflikte zu vermeiden.
+  entryClicked = output<number>();
 
   onClickBlogEntry() {
-    if (this.blogEntry?.id) {
-      this.blogId.emit(this.blogEntry.id);
+    const entry = this.blogEntry();
+    if (entry?.id) {
+      // Das 'emit' wird auf dem neuen Signal aufgerufen.
+      this.entryClicked.emit(entry.id);
     }
   }
 }
