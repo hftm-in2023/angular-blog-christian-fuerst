@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular-blog-r-steger": {
+    "angular-blog-christian-fuerst": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -118,7 +118,8 @@
   "cli": {
     "schematicCollections": [
       "angular-eslint"
-    ]
+    ],
+    "analytics": false
   },
   "schematics": {
     "@schematics/angular:component": {

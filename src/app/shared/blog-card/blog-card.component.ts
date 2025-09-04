@@ -24,7 +24,7 @@ import { BlogEntryPreview } from '../../core/service/blog/blog.service';
             this.blogEntry.headerImageUrl !== '' &&
             typeof this.blogEntry.headerImageUrl === 'string'
               ? this.blogEntry.headerImageUrl
-              : 'images/pictureNotFound.png'
+              : 'images/pictureNotFound.jpg'
           "
           alt="Missing Picture"
         />
