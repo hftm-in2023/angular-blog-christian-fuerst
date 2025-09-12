@@ -27,11 +27,11 @@ import { map } from 'rxjs/operators';
 
       <div class="nav-user" *ngIf="(isAuthenticated$ | async) as loggedIn">
         <ng-container *ngIf="!loggedIn; else logged">
-          <button type="button" (click)="oidc.authorize()">Login</button>
+          <button type="button" (click)="login()">Login</button>
         </ng-container>
         <ng-template #logged>
           <span class="username">Hallo, {{ userName$ | async }}</span>
-          <button type="button" (click)="oidc.logoff()">Logout</button>
+          <button type="button" (click)="logout()">Logout</button>
         </ng-template>
       </div>
 
@@ -44,6 +44,10 @@ import { map } from 'rxjs/operators';
 })
 export class NavbarComponent {
   private oidc = inject(OidcSecurityService);
+
+  // öffentliche Methoden für das Template
+  login()  { this.oidc.authorize(); }
+  logout() { this.oidc.logoff(); }
 
   isMenuOpen = false;
 
