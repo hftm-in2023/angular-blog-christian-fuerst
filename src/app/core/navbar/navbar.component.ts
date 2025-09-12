@@ -25,6 +25,16 @@ import { map } from 'rxjs/operators';
         <span class="username">Hallo, {{ userName$ | async }}</span>
       </div>
 
+      <div class="nav-user" *ngIf="(isAuthenticated$ | async) as loggedIn">
+        <ng-container *ngIf="!loggedIn; else logged">
+          <button type="button" (click)="oidc.authorize()">Login</button>
+        </ng-container>
+        <ng-template #logged>
+          <span class="username">Hallo, {{ userName$ | async }}</span>
+          <button type="button" (click)="oidc.logoff()">Logout</button>
+        </ng-template>
+      </div>
+
       <app-hamburger-icon (click)="toggleMenu()" [isOpen]="isMenuOpen"></app-hamburger-icon>
     </nav>
   `,
