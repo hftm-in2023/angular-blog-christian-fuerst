@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-
+import { AsyncPipe, NgIf } from '@angular/common';
 import { HamburgerIconComponent } from './hamburger-icon/hamburger-icon.component';
+import { OidcSecurityService } from 'angular-auth-oidc-client';
+import { hasRole } from '../auth/roles.util';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-navbar',
@@ -9,21 +12,42 @@ import { HamburgerIconComponent } from './hamburger-icon/hamburger-icon.componen
     <nav class="navbar">
       <div class="nav-links" [class.open]="isMenuOpen">
         <a [routerLink]="['/blog']" (click)="closeMenu()">Blog</a>
+
+        <!-- Nur für user-Role sichtbar -->
+        <a
+          *ngIf="hasUserRole$ | async"
+          [routerLink]="['/add-blog']"
+          (click)="closeMenu()"
+        >+ Neuer Blog</a>
       </div>
+
+      <div class="nav-user" *ngIf="(isAuthenticated$ | async)">
+        <span class="username">Hallo, {{ userName$ | async }}</span>
+      </div>
+
       <app-hamburger-icon (click)="toggleMenu()" [isOpen]="isMenuOpen"></app-hamburger-icon>
     </nav>
   `,
   styleUrl: './navbar.component.scss',
-  imports: [HamburgerIconComponent, RouterLink],
+  imports: [HamburgerIconComponent, RouterLink, AsyncPipe, NgIf],
+  standalone: true,
 })
 export class NavbarComponent {
+  private oidc = inject(OidcSecurityService);
+
   isMenuOpen = false;
 
-  toggleMenu() {
-    this.isMenuOpen = !this.isMenuOpen;
-  }
+  // robust gegen unterschiedliche Rückgabeformen der Lib
+  isAuthenticated$ = this.oidc.isAuthenticated$.pipe(
+    map((v: any) => (typeof v === 'boolean' ? v : !!v?.isAuthenticated)),
+  );
 
-  closeMenu() {
-    this.isMenuOpen = false;
-  }
+  userName$ = this.oidc.userData$.pipe(
+    map((u: any) => u?.preferred_username || u?.name || u?.email || 'User'),
+  );
+
+  hasUserRole$ = this.oidc.userData$.pipe(map((u: any) => hasRole(u, 'user')));
+
+  toggleMenu() { this.isMenuOpen = !this.isMenuOpen; }
+  closeMenu() { this.isMenuOpen = false; }
 }
