@@ -1,47 +1,58 @@
-import { Component, ChangeDetectionStrategy, inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, inject, ChangeDetectionStrategy, computed } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+
+import { BlogService } from '../../core/service/blog/blog.service';
 import { BlogCardComponent } from '../../shared/blog-card/blog-card.component';
-import { BlogStateService } from '../../core/state/blog.service';
-import * as BlogActions from '../../core/state/blog.state';
-import { LoadingSpinnerComponent } from '../../shared/loading-spinner/loading-spinner.component';
-import { NgIf, NgFor } from '@angular/common';
+import { StateHandler } from '../../core/state-management/appstate.service';
 
 @Component({
   selector: 'app-blog',
-  imports: [NgIf, NgFor, BlogCardComponent, LoadingSpinnerComponent],
+  imports: [BlogCardComponent, RouterLink],
   styleUrl: './blog.component.scss',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <h1>Blog Übersicht</h1>
 
-    @if (state.loading()) {
-      <app-loading-spinner></app-loading-spinner>
-    } @else if (state.error()) {
-      <p class="error">Ein Fehler ist aufgetreten: {{ state.error() }}</p>
+    @if (loading()) {
+      <p>Lade Daten...</p>
+      <div class="blog-container">
+        <span class="loader"></span>
+      </div>
+    } @else if (error()) {
+      <p style="color: red;">{{ error() }}</p>
     } @else {
       <div class="blog-container">
-        @for (blog of state.blogs(); track blog.id) {
+        @for (blog of filteredBlogs(); track blog.id) {
           <app-blog-card
             [blogEntry]="blog"
-            (entryClicked)="handleClickOnBlogEntry($event)"
+            (blogId)="handleClickOnBlogEntry($event)"
           ></app-blog-card>
         } @empty {
           <p>Keine Blogeinträge vorhanden.</p>
         }
+        @if (authState().isAuthenticated()) {
+          <button [routerLink]="['/add-blog/']">Neuer Blog</button>
+        }
       </div>
     }
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BlogComponent implements OnInit {
-  public state = inject(BlogStateService);
-  private router = inject(Router);
+export default class BlogComponent {
+  blogService = inject(BlogService);
+  router = inject(Router);
+  stateHandler = inject(StateHandler);
+  authState = computed(this.stateHandler.authState);
 
-  ngOnInit() {
-    this.state.dispatch(BlogActions.loadBlogs());
+  filteredBlogs = this.blogService.blogs;
+  loading = this.blogService.loading;
+  error = this.blogService.error;
+
+  constructor() {
+    this.blogService.rxGetBlogs({ searchString: '' });
   }
 
-  handleClickOnBlogEntry(entryId: number) {
-    this.router.navigate(['/blog/', entryId]);
+  handleClickOnBlogEntry(blogId: number) {
+    this.router.navigate(['/blog/', blogId]);
   }
 }
