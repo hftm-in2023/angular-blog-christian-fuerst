@@ -1,14 +1,72 @@
-// Primärfarben
-$color-primary-dark: #303f9f; // DARK PRIMARY COLOR
-$color-primary: #3f51b5; // PRIMARY COLOR
-$color-primary-light: #c5cae9; // LIGHT PRIMARY COLOR
+// // --- Standard ---
+// // Primärfarben
+// $color-primary-dark: #303f9f; // DARK PRIMARY COLOR
+// $color-primary: #3f51b5; // PRIMARY COLOR
+// $color-primary-light: #c5cae9; // LIGHT PRIMARY COLOR
 
-// Akzentfarbe
-$color-accent: #ffc107; // ACCENT COLOR (oder #FFC107, das ist FFC107 im Bild)
-$color-background: #fafafa; // BACKGROUND COLOR
+// // Akzentfarbe
+// $color-accent: #ffc107; // ACCENT COLOR (oder #FFC107, das ist FFC107 im Bild)
+// $color-background: #fafafa; // BACKGROUND COLOR
+
+// // Text- und Icon-Farben
+// $color-text-icons: #ffffff; // TEXT / ICONS (oft für Texte auf primären/dunklen Hintergründen)
+// $color-text-primary: #212121; // PRIMARY TEXT (oft für Haupttexte auf hellen Hintergründen)
+// $color-text-secondary: #757575; // SECONDARY TEXT (oft für Hilfsinformationen auf hellen Hintergründen)
+// $color-divider: #bdbdbd; // DIVIDER COLOR
+
+// --- Palette 1: Warm & Natürlich ---
+
+// Primärfarben (Ein tiefes, erdiges Grün)
+$color-primary-dark: #2F4F4F;   // Dark Slate Gray
+$color-primary: #556B2F;       // Olive Drab
+$color-primary-light: #F5F5DC; // Beige
+
+// Akzentfarbe (Ein warmer, sonniger Terrakotta-Ton)
+$color-accent: #D2691E;       // Chocolate
+
+// Hintergrundfarbe
+$color-background: #FFFAF0;   // Floral White
 
 // Text- und Icon-Farben
-$color-text-icons: #ffffff; // TEXT / ICONS (oft für Texte auf primären/dunklen Hintergründen)
-$color-text-primary: #212121; // PRIMARY TEXT (oft für Haupttexte auf hellen Hintergründen)
-$color-text-secondary: #757575; // SECONDARY TEXT (oft für Hilfsinformationen auf hellen Hintergründen)
-$color-divider: #bdbdbd; // DIVIDER COLOR
+$color-text-icons: #FFFFFF;
+$color-text-primary: #36454F;   // Charcoal
+$color-text-secondary: #696969; // Dim Gray
+$color-divider: #D3D3D3;       // Light Gray
+
+// // --- Palette 2: Modern & Fokussiert ---
+
+// // Primärfarben (Ein gedämpftes, kühles Blau)
+// $color-primary-dark: #2c3e50;   // Slate Blue
+// $color-primary: #34495e;       // Wet Asphalt
+// $color-primary-light: #ecf0f1; // Clouds
+
+// // Akzentfarbe (Ein frischer, aber nicht zu lauter Mint-Ton)
+// $color-accent: #1abc9c;       // Turquoise
+
+// // Hintergrundfarbe
+// $color-background: #fdfdfd;   // Near White
+
+// // Text- und Icon-Farben
+// $color-text-icons: #FFFFFF;
+// $color-text-primary: #212121;
+// $color-text-secondary: #5f6c7b; // Steel Gray
+// $color-divider: #bdc3c7;       // Silver
+
+// // --- Palette 3: Lebendig & Kreativ ---
+
+// // Primärfarben (Ein tiefes, sattes Violett)
+// $color-primary-dark: #4A148C;   // Deep Purple
+// $color-primary: #6A1B9A;       // Rich Purple
+// $color-primary-light: #E1BEE7; // Light Purple
+
+// // Akzentfarbe (Ein knalliger, frischer Pink-Ton)
+// $color-accent: #FF4081;       // Hot Pink
+
+// // Hintergrundfarbe
+// $color-background: #F9F7FD;   // Very Light Lavender
+
+// // Text- und Icon-Farben
+// $color-text-icons: #FFFFFF;
+// $color-text-primary: #333333;
+// $color-text-secondary: #828282;
+// $color-divider: #E0E0E0;

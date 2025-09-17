@@ -1,30 +1,32 @@
-import { Component, ChangeDetectionStrategy, input } from '@angular/core';
-import { NgIf, NgFor } from '@angular/common';
-import { BlogEntry } from '../../core/models/blog.models';
+import { Component, input, ChangeDetectionStrategy } from '@angular/core';
+
+import { BlogEntry } from '../../core/service/blog/blog.service';
 
 @Component({
   selector: 'app-blog-detail-view',
-  imports: [NgIf, NgFor],
-  standalone: true,
+  imports: [],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    @if (blog(); as blogData) {
+    @if (blog() === null) {
+      <p>Blog konnte nicht geladen werden.</p>
+    } @else {
       <div class="blog-content">
         <div>
-          <h1>{{ blogData.title }}</h1>
-          <p>Blog Id: {{ blogData.id }}</p>
+          <h1>{{ this.blog()!.title }}</h1>
+          <p>Blog Id: {{ this.blog()!.id }}</p>
         </div>
-        <p class="date">{{ blogData.createdAt }}</p>
-        <p>{{ blogData.content }}</p>
+        <p class="date">{{ this.blog()!.createdAt }}</p>
+        <p>{{ this.blog()!.content }}</p>
         <div class="end">
-          <p class="author">Author: {{ blogData.author }}</p>
+          <p class="author">Author: {{ this.blog()!.author }}</p>
           <div class="likes">
-            <img src="images/like.png" alt="Likes" />
-            <p>{{ blogData.likes }}</p>
+            <img [src]="'images/like.png'" alt="Missing Picture" />
+            <p>{{ this.blog()!.likes }}</p>
           </div>
         </div>
       </div>
       <div class="comments">
-        @for (comment of blogData.comments; track comment.id) {
+        @for (comment of this.blog()!.comments; track comment.id) {
           <div class="comment">
             <h2>{{ comment.author }}</h2>
             <p>Comment Id: {{ comment.id }}</p>
@@ -32,14 +34,10 @@ import { BlogEntry } from '../../core/models/blog.models';
           </div>
         }
       </div>
-    } @else {
-      <p>Kein Blog zum Anzeigen ausgewählt.</p>
     }
   `,
   styleUrl: './blog-detail-view.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BlogDetailViewComponent {
-  // input signal statt @Input
-  blog = input<BlogEntry | null>();
+  blog = input.required<BlogEntry>();
 }

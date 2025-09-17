@@ -1,6 +1,20 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { isAuthenticatedGuard } from './core/guards/is-authenticated.guard';
+import { inject, NgModule } from '@angular/core';
+import { CanActivateFn, RouterModule, Routes } from '@angular/router';
+
+// import { BlogComponent } from './blog/blog.component'; // Wird nur bei Eager Loading benötigt
+// import { CalculatorComponent } from './calculator/calculator.component'; // Wird nur bei Eager Loading benötigt
+// import { BlogDetailComponent } from './blog-detail/blog-detail.component'; // Wird nur bei Eager Loading benötigt
+import { blogDetailResolver } from './core/service/blog-detail-resolve/blog-detail-resolve.service';
+import { StateHandler } from './core/state-management/appstate.service';
+
+const authGuard: CanActivateFn = async () => {
+  const stateHandler = inject(StateHandler);
+  const roles = await stateHandler.authState().roles();
+  return (
+    stateHandler.authState().isAuthenticated() &&
+    (roles?.includes('user') ? true : (stateHandler.authState().login(), false))
+  );
+};
 
 export const routes: Routes = [
   {
@@ -8,26 +22,23 @@ export const routes: Routes = [
     redirectTo: '/blog',
     pathMatch: 'full',
   },
-
   {
     path: 'blog',
-    loadComponent: () => 
-      import('./features/blog/blog.component').then((c) => c.BlogComponent), // Lazy Loading aktivieren
+    // component: BlogComponent,
+    loadComponent: () => import('./features/blog/blog.component'),
   },
-
-  {
-    path: 'blog/:id',
-    loadComponent: () =>
-      import('./features/blog-detail/blog-detail.component').then((c) => c.BlogDetailComponent), // Lazy Loading aktivieren
-  },
-
   {
     path: 'add-blog',
-    canActivate: [isAuthenticatedGuard], // Top-Level Guard
-    loadChildren: () =>
-      import('./features/add-blog-page/add-blog-page.module').then((m) => m.AddBlogPageModule),
+    // component: BlogComponent,
+    loadComponent: () => import('./features/add-blog/add-blog.component'),
+    canActivate: [authGuard],
   },
-
+  {
+    path: 'blog/:id',
+    // component: BlogDetailComponent, // Wird nicht mehr benötig, da dies Eager Loading ist.
+    resolve: { data: blogDetailResolver },
+    loadComponent: () => import('./features/blog-detail/blog-detail.component'),
+  },
 ];
 
 @NgModule({
