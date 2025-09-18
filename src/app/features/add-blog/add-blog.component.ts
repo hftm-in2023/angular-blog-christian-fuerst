@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { AbstractControl, ValidationErrors } from '@angular/forms';
 import { DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { signal } from '@angular/core';
 
 @Component({
   selector: 'app-add-blog',
@@ -63,17 +64,15 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
         type="submit"
         class="submit-button"
         mat-raised-button
-        [disabled]="formTyped.invalid"
+        [disabled]="submitButtonDisabled()"
       >
         Publish blog
       </button>
 
       <button type="reset" mat-raised-button>Reset</button>
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
+
+      <br /><br /><br /><br /><br />
+
       <button [routerLink]="['/blog/']">Zurück</button>
     </div>
   `,
@@ -81,6 +80,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 })
 export default class BlogDetailComponent {
   destroyRef = inject(DestroyRef);
+
+  submitButtonDisabled = signal<boolean>(false);
 
   constructor() {
     // Auf Wertänderungen reagieren
@@ -149,10 +150,20 @@ export default class BlogDetailComponent {
     });
   }
 
-  onSubmit() {
+  async onSubmit() {
     if (this.formTyped.valid) {
-      console.log('Form data:', this.formTyped.value);
-      // Hier würden die Daten an den Server gesendet
+      this.submitButtonDisabled.set(true);
+
+      try {
+        const blogData = this.formTyped.value;
+        console.log('Blog submitted:', blogData);
+
+        // Blog speichern (wird im nächsten Schritt implementiert)
+        // await this.blogStore.addBlog(blogData as CreatedBlog);
+      } catch (error) {
+        console.error('Error submitting blog:', error);
+        this.submitButtonDisabled.set(false);
+      }
     } else {
       console.log('Form is invalid');
     }
