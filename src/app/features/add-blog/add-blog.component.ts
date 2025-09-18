@@ -58,18 +58,24 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
       </div>
     </form>
 
-    <button
-      type="submit"
-      class="submit-button"
-      mat-raised-button
-      [disabled]="formTyped.invalid"
-    >
-      Publish blog
-    </button>
+    <div class="button-group">
+      <button
+        type="submit"
+        class="submit-button"
+        mat-raised-button
+        [disabled]="formTyped.invalid"
+      >
+        Publish blog
+      </button>
 
-    <br />
-
-    <button [routerLink]="['/blog/']">Zurück</button>
+      <button type="reset" mat-raised-button>Reset</button>
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <button [routerLink]="['/blog/']">Zurück</button>
+    </div>
   `,
   styleUrl: './add-blog.component.scss',
 })
