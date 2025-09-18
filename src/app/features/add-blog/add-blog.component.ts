@@ -6,6 +6,8 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { AbstractControl, ValidationErrors } from '@angular/forms';
+import { DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-add-blog',
@@ -72,6 +74,26 @@ import { AbstractControl, ValidationErrors } from '@angular/forms';
   styleUrl: './add-blog.component.scss',
 })
 export default class BlogDetailComponent {
+  destroyRef = inject(DestroyRef);
+
+  constructor() {
+    // Auf Wertänderungen reagieren
+    this.formTyped.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((value) => {
+        console.log('Form value changed:', value);
+        // Hier kannst du auf Änderungen reagieren
+      });
+
+    // Auf Status-Änderungen reagieren
+    this.formTyped.statusChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((status) => {
+        console.log('Form status changed:', status);
+        // Status: VALID, INVALID, PENDING, DISABLED
+      });
+  }
+
   formTyped = new FormGroup<{
     title: FormControl<string>;
     content: FormControl<string>;
