@@ -91,8 +91,12 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   `,
   styleUrl: './add-blog.component.scss',
 })
-export default class BlogDetailComponent {
+export default class AddBlogComponent {
   destroyRef = inject(DestroyRef);
+  // private blogStore = inject(BlogStore);
+
+  // State für Template verfügbar machen
+  // protected state = this.blogStore.state;
 
   submitButtonDisabled = signal<boolean>(false);
 
@@ -168,17 +172,16 @@ export default class BlogDetailComponent {
       this.submitButtonDisabled.set(true);
 
       try {
-        const blogData = this.formTyped.value;
-        console.log('Blog submitted:', blogData);
-
-        // Blog speichern (wird im nächsten Schritt implementiert)
+        // const blogData = this.formTyped.value;
         // await this.blogStore.addBlog(blogData as CreatedBlog);
+        // Navigation wird vom Store gehandhabt
       } catch (error) {
+        // Fehler wird vom Store gehandhabt
         console.error('Error submitting blog:', error);
         this.submitButtonDisabled.set(false);
       }
     } else {
-      console.log('Form is invalid');
+      this.formTyped.markAllAsTouched();
     }
   }
 }
