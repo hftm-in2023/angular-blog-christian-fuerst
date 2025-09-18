@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-add-blog',
@@ -12,4 +13,16 @@ import { RouterLink } from '@angular/router';
   `,
   styleUrl: './add-blog.component.scss',
 })
-export default class BlogDetailComponent {}
+export default class BlogDetailComponent {
+  formTyped = new FormGroup<{
+    title: FormControl<string>;
+    content: FormControl<string>;
+  }>({
+    title: new FormControl<string>('an exciting title', {
+      nonNullable: true,
+    }),
+    content: new FormControl<string>('', {
+      nonNullable: true,
+    }),
+  });
+}
