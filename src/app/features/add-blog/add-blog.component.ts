@@ -21,7 +21,7 @@ import { MatButtonModule } from '@angular/material/button';
   template: `
     <h1>Blog hinzufügen</h1>
 
-    <form [formGroup]="formTyped">
+    <form [formGroup]="formTyped" (ngSubmit)="onSubmit()">
       <div class="blog-input">
         <mat-form-field appearance="fill">
           <mat-label>Title</mat-label>
@@ -57,4 +57,13 @@ export default class BlogDetailComponent {
       nonNullable: true,
     }),
   });
+
+  onSubmit() {
+    if (this.formTyped.valid) {
+      console.log('Form data:', this.formTyped.value);
+      // Hier würden die Daten an den Server gesendet
+    } else {
+      console.log('Form is invalid');
+    }
+  }
 }
