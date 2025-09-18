@@ -34,6 +34,11 @@ import { AbstractControl, ValidationErrors } from '@angular/forms';
             } @else if (formTyped.get('title')?.hasError('pattern')) {
               <span>Title must start with a capital letter</span>
             }
+            @if (formTyped.get('title')?.hasError('custom')) {
+              <span>Custom error: Title cannot be 'Test'</span>
+            } @else if (formTyped.get('title')?.hasError('customAsync')) {
+              <span>Custom async error: Title cannot be 'Test Async'</span>
+            }
           </mat-error>
         </mat-form-field>
 
@@ -79,7 +84,7 @@ export default class BlogDetailComponent {
         Validators.pattern('^[A-Z].*'), // Muss mit Großbuchstaben beginnen
         this.customValidator, // Custom Validator hinzufügen
       ],
-      asyncValidators: [],
+      asyncValidators: [this.customAsyncValidator], // Async Validator
     }),
     content: new FormControl<string>('', {
       nonNullable: true,
@@ -98,6 +103,22 @@ export default class BlogDetailComponent {
       return { custom: true };
     }
     return null;
+  }
+
+  // Asynchrone Validatoren
+  customAsyncValidator(
+    control: AbstractControl,
+  ): Promise<ValidationErrors | null> {
+    return new Promise((resolve) => {
+      // Simuliere Server-Anfrage mit Verzögerung
+      setTimeout(() => {
+        if (control.value === 'Test Async') {
+          resolve({ customAsync: true });
+        } else {
+          resolve(null);
+        }
+      }, 1000); // 1 Sekunde Verzögerung
+    });
   }
 
   onSubmit() {
