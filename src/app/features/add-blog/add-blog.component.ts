@@ -1,7 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { FormControl, FormGroup } from '@angular/forms';
-// import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -26,18 +25,39 @@ import { MatButtonModule } from '@angular/material/button';
         <mat-form-field appearance="fill">
           <mat-label>Title</mat-label>
           <input matInput formControlName="title" />
-          <mat-error></mat-error>
+          <mat-error>
+            @if (formTyped.get('title')?.hasError('required')) {
+              <span>Title is required</span>
+            } @else if (formTyped.get('title')?.hasError('minlength')) {
+              <span>Title must be at least 2 characters long</span>
+            } @else if (formTyped.get('title')?.hasError('pattern')) {
+              <span>Title must start with a capital letter</span>
+            }
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="fill">
           <mat-label>Tell your story...</mat-label>
           <textarea matInput rows="20" formControlName="content"></textarea>
-          <mat-error></mat-error>
+          <mat-error>
+            @if (formTyped.get('content')?.hasError('required')) {
+              <span>Content is required</span>
+            } @else if (formTyped.get('content')?.hasError('minlength')) {
+              <span>Content must be at least 50 characters long</span>
+            }
+          </mat-error>
         </mat-form-field>
       </div>
     </form>
 
-    <button class="submit-button">Publish blog</button>
+    <button
+      type="submit"
+      class="submit-button"
+      mat-raised-button
+      [disabled]="formTyped.invalid"
+    >
+      Publish blog
+    </button>
 
     <br />
 
@@ -52,9 +72,20 @@ export default class BlogDetailComponent {
   }>({
     title: new FormControl<string>('an exciting title', {
       nonNullable: true,
+      validators: [
+        Validators.required,
+        Validators.minLength(2),
+        Validators.pattern('^[A-Z].*'), // Muss mit Großbuchstaben beginnen
+      ],
+      asyncValidators: [],
     }),
     content: new FormControl<string>('', {
       nonNullable: true,
+      validators: [
+        Validators.required,
+        Validators.minLength(50), // Mindestens 50 Zeichen
+      ],
+      asyncValidators: [],
     }),
   });
 
