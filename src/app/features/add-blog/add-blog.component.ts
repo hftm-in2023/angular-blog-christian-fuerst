@@ -5,6 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { AbstractControl, ValidationErrors } from '@angular/forms';
 
 @Component({
   selector: 'app-add-blog',
@@ -76,6 +77,7 @@ export default class BlogDetailComponent {
         Validators.required,
         Validators.minLength(2),
         Validators.pattern('^[A-Z].*'), // Muss mit Großbuchstaben beginnen
+        this.customValidator, // Custom Validator hinzufügen
       ],
       asyncValidators: [],
     }),
@@ -88,6 +90,15 @@ export default class BlogDetailComponent {
       asyncValidators: [],
     }),
   });
+
+  // Eigener Validator
+  customValidator(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+    if (value && value.toLowerCase() === 'test') {
+      return { custom: true };
+    }
+    return null;
+  }
 
   onSubmit() {
     if (this.formTyped.valid) {
