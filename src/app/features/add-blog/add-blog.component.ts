@@ -21,17 +21,17 @@ import { MatButtonModule } from '@angular/material/button';
   template: `
     <h1>Blog hinzufügen</h1>
 
-    <form>
+    <form [formGroup]="formTyped">
       <div class="blog-input">
         <mat-form-field appearance="fill">
           <mat-label>Title</mat-label>
-          <input matInput />
+          <input matInput formControlName="title" />
           <mat-error></mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="fill">
           <mat-label>Tell your story...</mat-label>
-          <textarea matInput rows="20"></textarea>
+          <textarea matInput rows="20" formControlName="content"></textarea>
           <mat-error></mat-error>
         </mat-form-field>
       </div>
