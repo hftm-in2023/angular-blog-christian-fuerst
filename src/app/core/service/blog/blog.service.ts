@@ -1,7 +1,17 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { catchError, debounceTime, map, Observable, of, Subject, switchMap, tap } from 'rxjs';
+import {
+  catchError,
+  debounceTime,
+  map,
+  Observable,
+  of,
+  Subject,
+  switchMap,
+  tap,
+} from 'rxjs';
 import { z } from 'zod';
+import { environment } from '../../../../environments/environment';
 
 export const BlogEntryPreviewSchema = z.object({
   id: z.number().int().positive(),
@@ -57,10 +67,9 @@ interface BlogDetailState {
   providedIn: 'root',
 })
 export class BlogService {
-  private apiUrl =
-    'https://d-cap-blog-backend---v2.whitepond-b96fee4b.westeurope.azurecontainerapps.io/entries';
+  readonly apiUrl = environment.serviceUrl;
 
-  private http = inject(HttpClient);
+  readonly http = inject(HttpClient);
 
   // constructor
   constructor() {
