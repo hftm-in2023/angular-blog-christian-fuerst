@@ -17,13 +17,7 @@ describe('BlogCard', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [provideRouter([])],
-      imports: [
-        CommonModule,
-        MatCardModule,
-        MatButtonModule,
-        MatIconModule,
-        BlogCardComponent,
-      ],
+      imports: [CommonModule, MatCardModule, MatButtonModule, MatIconModule],
     });
     fixture = TestBed.createComponent(BlogCardComponent);
     component = fixture.componentInstance;
@@ -105,5 +99,31 @@ describe('BlogCard', () => {
       By.css('mat-card-content p'),
     ).nativeElement;
     expect(title.innerText).toBe('Das ist die Vorschau...');
+  });
+
+  it('emits the blog id', () => {
+    fixture.componentRef.setInput('blogEntry', {
+      id: 1,
+      title: 'A title',
+      contentPreview: 'Das ist die Vorschau...',
+      headerImageUrl: '',
+      author: 'a author',
+      createdAt: '',
+      likes: 0,
+    } as BlogEntryPreview);
+
+    fixture.detectChanges();
+
+    let emittedValue: number | undefined;
+    fixture.componentRef.instance.blogId.subscribe(
+      (value) => (emittedValue = value),
+    );
+
+    const card = fixture.debugElement.query(By.css('mat-card')).nativeElement;
+    card.click();
+    fixture.detectChanges();
+
+    // Assert
+    expect(emittedValue).toBe(1);
   });
 });
